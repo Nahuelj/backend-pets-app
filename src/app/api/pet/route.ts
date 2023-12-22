@@ -2,13 +2,10 @@ import { NextResponse, NextRequest } from "next/server";
 import { connectMongo } from "../../../db/connect";
 import {User} from '../../../db/models/User'
 import {comparePasswords} from '../../../backendUtils/password'
-import { generateToken} from '../../../backendUtils/jwt'
-import { headers } from 'next/headers'
 
 
 
-
-export async function POST(request: NextRequest, res: NextResponse){
+export async function POST(request: NextRequest){
     await connectMongo();
     
     const body = await request.json();
@@ -22,20 +19,6 @@ export async function POST(request: NextRequest, res: NextResponse){
         return NextResponse.json({message: "invalid credentials"}, {status: 401})
     }
 
-    const payload = JSON.stringify(userFound)
-    const token = generateToken(payload)
-    // Crear una nueva instancia de NextResponse con un mensaje de éxito
- let response = NextResponse.json({ message: 'Login successful' });
-
- // Agregar el token JWT al encabezado de la respuesta
- response.cookies.set('token', token);
-
- return response;
-
+    return NextResponse.json({message: "pass"})
 }
-
-
-
- 
-
   
